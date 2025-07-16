@@ -1,0 +1,15 @@
+﻿@model IEnumerable<LaosEmployee.Models.Temploy1>;
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Employee Info</h1>
+@foreach (var item in Model)
+{
+    <p>ID : @item.Id </p>
+    <p>Fname : @item.Fname </p>
+    <p>Lname : @item.Lname </p>
+    <p>Status : @item.Status </p>
+    <hr/>
+}
