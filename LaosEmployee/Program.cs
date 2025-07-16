@@ -1,7 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using LaosEmployee.DBContext;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Register DBContext
+builder.Services.AddDbContext<EmployeeDbContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
