@@ -3,9 +3,10 @@ using LaosEmployee.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.Data.SqlClient;
-
+using Microsoft.EntityFrameworkCore;
+using BCrypt.Net;
 namespace LaosEmployee.Controllers
 {
  
@@ -44,6 +45,7 @@ namespace LaosEmployee.Controllers
 
             var usernameParam = new SqlParameter("@Username", request.Id);
             var passwordParam = new SqlParameter("@Password", request.Password);
+            //var passwordParam = new SqlParameter("@Password", PasswordHasher.HashPassword(request.Password));
 
             var result = await _context.Set<LoginResponseDto>()
                 .FromSqlRaw("EXEC sp_LoginUser @Username, @Password", usernameParam, passwordParam)
@@ -89,5 +91,24 @@ namespace LaosEmployee.Controllers
             return RedirectToAction("Index", "Login");
         }
 
+       
+
+        public static class PasswordHasher
+    {
+        public static string HashPassword(string password)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password);
+        }
+
+        public static bool VerifyPassword(string password, string hashed)
+        {
+                //string plainPassword = "mypassword123";
+                //string hashedPassword = PasswordHasher.HashPassword(plainPassword);
+
+                //bool isValid = PasswordHasher.VerifyPassword("mypassword123", hashedPassword);
+                // isValid จะเป็น true ถ้าตรงกัน
+                return BCrypt.Net.BCrypt.Verify(password, hashed);
+        }
     }
+}
 }
