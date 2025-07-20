@@ -9,5 +9,13 @@ namespace LaosEmployee.DBContext
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<UserLogin> UserLogins { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Configure LoginResponseDto as a keyless entity
+            modelBuilder.Entity<LoginResponseDto>().HasNoKey();
+        }
     }
 }

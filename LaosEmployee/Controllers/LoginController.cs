@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 
 namespace LaosEmployee.Controllers
 {
-    //[ApiController]
-    //[Route("api/[controller]")]
+ 
     public class LoginController : Controller
     {
         private readonly AppDbContext _context;
@@ -20,7 +20,7 @@ namespace LaosEmployee.Controllers
 
         public class LoginRequest
         {
-            public string Username { get; set; } = string.Empty;
+            public string Id { get; set; } = string.Empty;
             public string Password { get; set; } = string.Empty;
         }
 
@@ -28,13 +28,33 @@ namespace LaosEmployee.Controllers
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             var user = await _context.UserLogins
-                .FirstOrDefaultAsync(u => u.Username == request.Username && u.Password == request.Password);
+                .FirstOrDefaultAsync(u => u.Id == request.Id && u.Password == request.Password);
 
             if (user == null)
                 return Unauthorized(new { message = "Invalid username or password" });
 
             return Ok(new { message = "Login successful", userId = user.Id });
         }
+
+        [HttpPost("api/login")]
+        public async Task<IActionResult> ApiLogin([FromBody] LoginRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.Id) || string.IsNullOrWhiteSpace(request.Password))
+                return BadRequest(new { message = "Username and password are required." });
+
+            var usernameParam = new SqlParameter("@Username", request.Id);
+            var passwordParam = new SqlParameter("@Password", request.Password);
+
+            var result = await _context.Set<LoginResponseDto>()
+                .FromSqlRaw("EXEC sp_LoginUser @Username, @Password", usernameParam, passwordParam)
+                .ToListAsync();
+
+            if (result.Count == 0)
+                return Unauthorized(new { message = "Invalid username or password." });
+
+            return Ok(result.First());
+        }
+
 
         public IActionResult Index()
         {

@@ -3,7 +3,7 @@
 namespace LaosEmployee.Models
 {
     public class UserLogin    {
-        public int Id { get; set; }
+        public string Id { get; set; } = string.Empty;
         [Required]
         public string Username { get; set; } = string.Empty;
         [Required]
