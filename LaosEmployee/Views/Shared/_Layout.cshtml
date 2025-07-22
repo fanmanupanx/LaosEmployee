@@ -32,18 +32,32 @@
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown"aria-expanded="false">
+                                    Employee Movement
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+
+                                    <li><a class="dropdown-item" asp-controller="Temploy1" asp-action="Index">Employee Data</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Employee" asp-action="Index">Employee Info</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Temploy1" asp-action="Create">Add New Employee</a></li>
+                                </ul>
+                            </li>                           
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="">Time Attendance</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Temploy1" asp-action="Index">Employee Data</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="">Leave</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Employee" asp-action="Index">Employee Info</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="">Payroll</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Temploy1" asp-action="Create">Add New Employee</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="">ESS</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="">MSS</a>
+                            </li>                            
                         </ul>
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
